@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.LoginPageController">
+   <children>
+      <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="220.0" prefWidth="630.0" style="-fx-background-color: #8FBC8F;">
+         <children>
+            <Text layoutX="55.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="System obliczania wynagrodzenia za pracę" textAlignment="CENTER" wrappingWidth="519.13671875">
+               <font>
+                  <Font name="Segoe UI Black" size="38.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Text layoutX="207.0" layoutY="316.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logowanie się do systemu:" wrappingWidth="235.13671875">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="182.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login :" wrappingWidth="60.986328125">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Text layoutX="182.0" layoutY="418.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hasło :" wrappingWidth="60.986328125">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <TextField fx:id="login" layoutX="243.0" layoutY="361.0" prefHeight="25.0" prefWidth="205.0" promptText="login" />
+      <PasswordField fx:id="haslo" layoutX="243.0" layoutY="400.0" prefHeight="25.0" prefWidth="205.0" promptText="haslo" />
+      <Button fx:id="log_button" contentDisplay="CENTER" layoutX="243.0" layoutY="441.0" mnemonicParsing="false" onAction="#zaloguj" prefHeight="25.0" prefWidth="205.0" text="Zaloguj" textAlignment="CENTER" />
+      <Pane layoutY="580.0" prefHeight="50.0" prefWidth="630.0" style="-fx-background-color: #8FBC8F;" />
+   </children>
+</AnchorPane>
