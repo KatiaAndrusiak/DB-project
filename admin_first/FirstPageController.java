@@ -7,11 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,18 +17,18 @@ import java.util.ResourceBundle;
 
 public class FirstPageController implements Initializable {
     @FXML
-    private Label add_empl;
+    private MenuItem lista;
     @FXML
-    private Label add_dep;
+    private MenuItem add_empl;
     @FXML
-    private Label count;
+    private MenuItem add_dep;
+    @FXML
+    private MenuItem count;
     @FXML
     private Button logout;
+    @FXML
+    private Pane mainPane;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
 
     public void wyloguj(ActionEvent event) throws Exception {
 
@@ -45,14 +42,35 @@ public class FirstPageController implements Initializable {
 
     }
 
-    public void addNewEmployee(ActionEvent event){
+    @FXML
+    public void employeeList(ActionEvent event)throws IOException{
+        Parent fxml= FXMLLoader.load(getClass().getResource("employeeList.fxml"));
+        mainPane.getChildren().removeAll();
+        mainPane.getChildren().addAll(fxml);
+    }
+
+    @FXML
+    public void addNewEmployee(ActionEvent event) throws IOException{
+        Parent fxml= FXMLLoader.load(getClass().getResource("addEmployee.fxml"));
+        mainPane.getChildren().removeAll();
+        mainPane.getChildren().addAll(fxml);
 
     }
-    public void addNewDepartment(ActionEvent event){
-
+    @FXML
+    public void addNewDepartment(ActionEvent event) throws IOException{
+        Parent fxml= FXMLLoader.load(getClass().getResource("addNewPosition.fxml"));
+        mainPane.getChildren().removeAll();
+        mainPane.getChildren().addAll(fxml);
     }
 
-    public void countSalary(ActionEvent event){
+    public void countSalary(ActionEvent event) throws IOException{
+        Parent fxml= FXMLLoader.load(getClass().getResource("addBon.fxml"));
+        mainPane.getChildren().removeAll();
+        mainPane.getChildren().addAll(fxml);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
 
     }
 }
