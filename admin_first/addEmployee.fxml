@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="admin_first.AddEmployeeController">
+   <content>
+      <AnchorPane prefHeight="600.0" prefWidth="750.0">
+         <children>
+            <Text layoutX="14.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dodawanie pracownika do bazy:">
+               <font>
+                  <Font name="Segoe UI Semibold" size="22.0" />
+               </font>
+            </Text>
+            <Text layoutX="78.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Imię:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text layoutX="38.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nazwisko:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text layoutX="58.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Miasto:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text layoutX="415.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dział:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text layoutX="361.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stanowisko:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text layoutX="421.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Etat:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <ComboBox fx:id="department" layoutX="466.0" layoutY="129.0" onAction="#addPositionsByDepartment" prefHeight="30.0" prefWidth="225.0" promptText="Wybierz dział" />
+            <ComboBox fx:id="position" layoutX="466.0" layoutY="172.0" prefHeight="30.0" prefWidth="225.0" promptText="Wybierz stanowisko" />
+            <ComboBox fx:id="etat" layoutX="466.0" layoutY="218.0" prefHeight="30.0" prefWidth="225.0" promptText="Wybierz etat" />
+            <TextField fx:id="name" layoutX="132.0" layoutY="129.0" prefHeight="30.0" prefWidth="215.0" promptText="Imię">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="surname" layoutX="132.0" layoutY="172.0" prefHeight="30.0" prefWidth="215.0" promptText="Nazwisko">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="city" layoutX="132.0" layoutY="218.0" prefHeight="30.0" prefWidth="215.0" promptText="Miasto">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <Text layoutX="60.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="e-mail:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <TextField fx:id="email" layoutX="132.0" layoutY="271.0" prefHeight="30.0" prefWidth="245.0" promptText="e-mail">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <Button fx:id="adtoDB" layoutX="317.0" layoutY="325.0" mnemonicParsing="false" onAction="#addEmployeeToDB" prefHeight="25.0" prefWidth="149.0" text="Zapisz" />
+            <Text layoutX="289.0" layoutY="417.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text layoutX="289.0" layoutY="451.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hasło:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Label fx:id="plogin" layoutX="359.0" layoutY="397.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="phaslo" layoutX="359.0" layoutY="431.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="bok" layoutX="317.0" layoutY="486.0" mnemonicParsing="false" onAction="#addLoginToDB" prefHeight="25.0" prefWidth="149.0" text="OK" />
+         </children>
+      </AnchorPane>
+   </content>
+   <contextMenu>
+      <ContextMenu>
+        <items>
+          <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+        </items>
+      </ContextMenu>
+   </contextMenu>
+</ScrollPane>
