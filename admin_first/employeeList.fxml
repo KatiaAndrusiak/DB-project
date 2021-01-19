@@ -10,25 +10,28 @@
 
 <ScrollPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="admin_first.EmployeeListController">
    <content>
-      <AnchorPane prefHeight="500.0" prefWidth="750.0">
+      <AnchorPane prefHeight="600.0" prefWidth="750.0">
          <children>
-            <TableView fx:id="table" layoutY="50.0" onMouseClicked="#l" prefHeight="450.0" prefWidth="750.0">
+            <TableView fx:id="table" layoutX="6.0" layoutY="50.0" onMouseClicked="#onTableClick" prefHeight="467.0" prefWidth="739.0">
               <columns>
-                <TableColumn fx:id="id" prefWidth="40.0" text="ID" />
-                <TableColumn fx:id="name" prefWidth="100.0" text="Imię" />
-                  <TableColumn fx:id="surname" prefWidth="102.0" text="Nazwisko" />
-                  <TableColumn fx:id="city" prefWidth="100.0" text="Miasto" />
-                  <TableColumn fx:id="email" prefWidth="136.0" text="E-mail" />
-                  <TableColumn fx:id="position" prefWidth="136.0" text="Stanowisko" />
-                  <TableColumn fx:id="department" prefWidth="136.0" text="Dział" />
+                <TableColumn fx:id="id" prefWidth="35.0" text="ID" />
+                <TableColumn fx:id="name" prefWidth="83.0" text="Imię" />
+                  <TableColumn fx:id="surname" prefWidth="110.0" text="Nazwisko" />
+                  <TableColumn fx:id="city" prefWidth="87.0" text="Miasto" />
+                  <TableColumn fx:id="email" prefWidth="130.0" text="E-mail" />
+                  <TableColumn fx:id="position" prefWidth="121.0" text="Stanowisko" />
+                  <TableColumn fx:id="department" prefWidth="85.0" text="Dział" />
+                  <TableColumn fx:id="etat" prefWidth="85.0" text="Etat" />
               </columns>
+                
             </TableView>
             <Text layoutX="14.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista pracownikow" wrappingWidth="199.13671875">
                <font>
                   <Font name="Segoe UI Semibold" size="22.0" />
                </font>
             </Text>
-            <Button layoutX="252.0" layoutY="13.0" mnemonicParsing="false" onAction="#list" text="Wyświetl listę" />
+            <Button fx:id="editButton" layoutX="258.0" layoutY="540.0" mnemonicParsing="false" onAction="#edit" prefHeight="25.0" prefWidth="86.0" text="Edytuj" />
+            <Button layoutX="390.0" layoutY="540.0" mnemonicParsing="false" onAction="#list" prefHeight="25.0" prefWidth="86.0" text="Odśwież" />
          </children>
       </AnchorPane>
    </content>

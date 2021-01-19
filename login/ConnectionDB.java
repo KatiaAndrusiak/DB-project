@@ -1,5 +1,7 @@
 package login;
 
+import javafx.scene.control.Alert;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,6 +19,11 @@ public class ConnectionDB {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             System.out.println("Brak polaczenia z baza danych.");
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Error");
+            a.setHeaderText("Brak polączenia z bazą danych!!!");
+            a.setContentText("Brak polączenia z bazą danych! Sprobuj ponownie!");
+            a.showAndWait();
         }
         return conn;
     }

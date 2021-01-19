@@ -69,7 +69,11 @@ public class AddEmployeeController implements Initializable {
         idEtat = 0;
         i= 0;
         j= 0;
+
+        plogin.setText(" ");
+        phaslo.setText(" ");
     }
+
 
     public void addEmployeeToDB(ActionEvent event)
     {
@@ -103,7 +107,6 @@ public class AddEmployeeController implements Initializable {
 
                 i = ps.executeUpdate();
                 ps.close();
-                rs.close();
 
                 String sql2 = "select * from pracownik where imie=? and nazwisko = ? and miasto = ? and email =?";
                 ps = con.prepareStatement(sql2);
@@ -125,7 +128,7 @@ public class AddEmployeeController implements Initializable {
 
                 j = ps.executeUpdate();
                 ps.close();
-                rs.close();
+
                 login ="p" + idPrac+ surname.getText()+"";
                 haslo = idPrac + surname.getText()+"";
                 if (i > 0 && j>0) {

@@ -10,7 +10,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <ScrollPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="admin_first.AddBonController">
    <content>
       <AnchorPane prefHeight="600.0" prefWidth="750.0">
@@ -20,7 +19,7 @@
             <ComboBox fx:id="month" layoutX="334.0" layoutY="147.0" prefHeight="30.0" prefWidth="150.0" promptText="Miesiąc" />
             <TextField fx:id="year" layoutX="257.0" layoutY="147.0" prefHeight="30.0" prefWidth="55.0" promptText="rok" />
             <TextField fx:id="days" layoutX="458.0" layoutY="191.0" prefHeight="30.0" prefWidth="69.0" promptText="dni" />
-            <Button layoutX="331.0" layoutY="475.0" mnemonicParsing="false" onAction="#countSalary" prefHeight="30.0" prefWidth="88.0" text="Policz" />
+            <Button layoutX="323.0" layoutY="440.0" mnemonicParsing="false" onAction="#countSalary" prefHeight="30.0" prefWidth="88.0" text="Policz" />
             <Text layoutX="190.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dział:">
                <font>
                   <Font size="18.0" />
@@ -36,12 +35,12 @@
                   <Font size="18.0" />
                </font>
             </Text>
-            <Label fx:id="sum" layoutX="346.0" layoutY="521.0" prefHeight="17.0" prefWidth="135.0">
+            <Label fx:id="sum" layoutX="161.0" layoutY="476.0" prefHeight="17.0" prefWidth="135.0">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Text layoutX="187.0" layoutY="542.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Do wyplaty:">
+            <Text layoutX="48.0" layoutY="497.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Do wyplaty:">
                <font>
                   <Font size="18.0" />
                </font>
@@ -51,30 +50,32 @@
                   <Font name="Segoe UI Semibold" size="22.0" />
                </font>
             </Text>
-            <ListView fx:id="premie" layoutX="26.0" layoutY="252.0" prefHeight="180.0" prefWidth="230.0" />
-            <ListView fx:id="bonus" layoutX="260.0" layoutY="252.0" prefHeight="180.0" prefWidth="230.0" />
-            <ListView fx:id="kara" layoutX="494.0" layoutY="252.0" prefHeight="180.0" prefWidth="230.0" />
-            <Text layoutX="108.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Premie:">
+            <ListView fx:id="premie" layoutX="26.0" layoutY="252.0" prefHeight="150.0" prefWidth="230.0" />
+            <ListView fx:id="bonus" layoutX="260.0" layoutY="252.0" prefHeight="150.0" prefWidth="230.0" />
+            <ListView fx:id="kara" layoutX="494.0" layoutY="252.0" prefHeight="150.0" prefWidth="230.0" />
+            <Text layoutX="26.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Premie:">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <Text layoutX="336.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonusy:">
+            <Text layoutX="260.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonusy:">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <Text layoutX="600.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kary:">
+            <Text layoutX="494.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kary:">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <Text layoutX="29.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*dokonać wielokrotnego wyboru można przytrzymując klawisz SHIFT lub CTRL podczas wybierania dodatkowych elementów po pierwszym wybranym elemencie." wrappingWidth="692.66015625" />
+            <Text layoutX="29.0" layoutY="415.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*dokonać wielokrotnego wyboru można przytrzymując klawisz SHIFT lub CTRL podczas wybierania dodatkowych elementów po pierwszym wybranym elemencie." wrappingWidth="692.66015625" />
             <Text layoutX="194.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rok:">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
+            <Label fx:id="total" alignment="TOP_LEFT" layoutX="296.0" layoutY="476.0" prefHeight="198.0" prefWidth="434.0" />
+            <Button layoutX="48.0" layoutY="540.0" mnemonicParsing="false" onAction="#clearAll" text="Wyczyść pola" />
          </children>
       </AnchorPane>
    </content>

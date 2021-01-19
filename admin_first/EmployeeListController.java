@@ -3,12 +3,13 @@ package admin_first;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -36,9 +37,42 @@ public class EmployeeListController implements Initializable {
     private TableColumn<Employee, String> position;
     @FXML
     private TableColumn<Employee, String> department;
+    @FXML
+    private TableColumn<Employee, String> etat;
+    @FXML
+    private Button editButton;
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
+
+    public static Employee selItem;
+
+    public  void onTableClick(){
+        editButton.setDisable(false);
+    }
+
+    public void edit(){
+        try {
+            if (table.getSelectionModel().getSelectedItem() != null) {
+                selItem = table.getSelectionModel().getSelectedItem();
+                Parent login = FXMLLoader.load(getClass().getResource("/admin_first/EditEmployee.fxml"));
+                Stage stage = new Stage();
+                stage.setScene(new Scene(login));
+                stage.show();
+            }
+        }
+        catch (Exception e){
+            AlertUp.allertBoxError("error", e.getMessage());
+        }
+    }
+
+
+    public static Employee getEmployee(){
+        return selItem;
+    }
+
+
+
 
     public void list(){
         id.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("id"));
@@ -48,6 +82,7 @@ public class EmployeeListController implements Initializable {
         email.setCellValueFactory(new PropertyValueFactory<Employee, String>("email"));
         position.setCellValueFactory(new PropertyValueFactory<Employee, String>("position"));
         department.setCellValueFactory(new PropertyValueFactory<Employee, String>("department"));
+        etat.setCellValueFactory(new PropertyValueFactory<Employee, String>("etat"));
         ObservableList<Employee> list = FXCollections.observableArrayList();
 
         try{
@@ -59,7 +94,7 @@ public class EmployeeListController implements Initializable {
            rs = ps.executeQuery();
             while(rs.next()){
                 list.add(new Employee(rs.getInt("id_pracownik"),rs.getString("imie"),rs.getString("nazwisko"),rs.getString("miasto")
-                        ,rs.getString("email"),rs.getString("stanowisko"),rs.getString("opis")));
+                        ,rs.getString("email"),rs.getString("stanowisko"),rs.getString("opis"), rs.getString("etat")));
             }
             ps.close();
             rs.close();
@@ -74,13 +109,17 @@ public class EmployeeListController implements Initializable {
 
         }
         table.setItems(list);
-
-
     }
 
 
+    private void initData(){
+        table.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        editButton.setDisable(true);
+        list();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        initData();
     }
 }

@@ -100,6 +100,7 @@
                </font>
             </Label>
             <Button fx:id="bok" layoutX="317.0" layoutY="486.0" mnemonicParsing="false" onAction="#addLoginToDB" prefHeight="25.0" prefWidth="149.0" text="OK" />
+            <Button layoutX="72.0" layoutY="528.0" mnemonicParsing="false" onAction="#clearAll" text="Wyczyść pola" />
          </children>
       </AnchorPane>
    </content>

@@ -8,8 +8,9 @@ public class Employee {
     private String email;
     private String position;
     private String department;
+    private String etat;
 
-    public Employee(int id, String name, String surname, String city, String email, String position, String department) {
+    public Employee(int id, String name, String surname, String city, String email, String position, String department, String etat) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -17,7 +18,18 @@ public class Employee {
         this.email = email;
         this.position = position;
         this.department = department;
+        this.etat = etat;
     }
+
+    public String getEtat() {
+        return etat;
+    }
+
+    public void setEtat(String etat) {
+        this.etat = etat;
+    }
+
+
 
     public int getId() {
         return id;

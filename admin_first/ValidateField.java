@@ -64,8 +64,8 @@ public class ValidateField {
         else{
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setTitle("Error");
-            a.setHeaderText(" Niepoprawnie wprowadzona stawka godzinowa.");
-            a.setContentText("Wprowadź poprawną kwotę");
+            a.setHeaderText(" Niepoprawnie wprowadzona liczba.");
+            a.setContentText("Wprowadź poprawną liczbę");
             a.showAndWait();
             return false;
         }
