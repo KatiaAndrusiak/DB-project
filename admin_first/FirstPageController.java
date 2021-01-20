@@ -44,27 +44,34 @@ public class FirstPageController implements Initializable {
 
     @FXML
     public void employeeList(ActionEvent event)throws IOException{
-        Parent fxml= FXMLLoader.load(getClass().getResource("employeeList.fxml"));
+        Parent fxml= FXMLLoader.load(getClass().getResource("../employees_list/employeeList.fxml"));
         mainPane.getChildren().removeAll();
         mainPane.getChildren().addAll(fxml);
     }
 
     @FXML
     public void addNewEmployee(ActionEvent event) throws IOException{
-        Parent fxml= FXMLLoader.load(getClass().getResource("addEmployee.fxml"));
+        Parent fxml= FXMLLoader.load(getClass().getResource("../add/addEmployee.fxml"));
         mainPane.getChildren().removeAll();
         mainPane.getChildren().addAll(fxml);
 
     }
     @FXML
     public void addNewDepartment(ActionEvent event) throws IOException{
-        Parent fxml= FXMLLoader.load(getClass().getResource("addNewPosition.fxml"));
+        Parent fxml= FXMLLoader.load(getClass().getResource("../add/addNewPosition.fxml"));
+        mainPane.getChildren().removeAll();
+        mainPane.getChildren().addAll(fxml);
+    }
+
+    @FXML
+    public void addNewBons(ActionEvent event) throws IOException{
+        Parent fxml= FXMLLoader.load(getClass().getResource("../add/addNewBons.fxml"));
         mainPane.getChildren().removeAll();
         mainPane.getChildren().addAll(fxml);
     }
 
     public void countSalary(ActionEvent event) throws IOException{
-        Parent fxml= FXMLLoader.load(getClass().getResource("addBon.fxml"));
+        Parent fxml= FXMLLoader.load(getClass().getResource("../count_salary/addBon.fxml"));
         mainPane.getChildren().removeAll();
         mainPane.getChildren().addAll(fxml);
     }

@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="admin_first.EmployeeListController">
+<ScrollPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="employees_list.EmployeeListController">
    <content>
       <AnchorPane prefHeight="600.0" prefWidth="750.0">
          <children>
@@ -21,7 +21,7 @@
                   <TableColumn fx:id="email" prefWidth="130.0" text="E-mail" />
                   <TableColumn fx:id="position" prefWidth="121.0" text="Stanowisko" />
                   <TableColumn fx:id="department" prefWidth="85.0" text="Dział" />
-                  <TableColumn fx:id="etat" prefWidth="86.0" text="Etat" />
+                  <TableColumn fx:id="etat" prefWidth="85.0" text="Etat" />
               </columns>
                 
             </TableView>
@@ -30,9 +30,8 @@
                   <Font name="Segoe UI Semibold" size="22.0" />
                </font>
             </Text>
-            <Button fx:id="editButton" layoutX="280.0" layoutY="538.0" mnemonicParsing="false" onAction="#edit" prefHeight="25.0" prefWidth="86.0" text="Edytuj" />
-            <Button layoutX="650.0" layoutY="13.0" mnemonicParsing="false" onAction="#list" prefHeight="25.0" prefWidth="86.0" text="Odśwież" />
-            <Button fx:id="deleteButton" layoutX="385.0" layoutY="538.0" mnemonicParsing="false" onAction="#delete" prefHeight="25.0" prefWidth="86.0" text="Usuń" />
+            <Button fx:id="editButton" layoutX="258.0" layoutY="540.0" mnemonicParsing="false" onAction="#edit" prefHeight="25.0" prefWidth="86.0" text="Edytuj" />
+            <Button layoutX="390.0" layoutY="540.0" mnemonicParsing="false" onAction="#list" prefHeight="25.0" prefWidth="86.0" text="Odśwież" />
          </children>
       </AnchorPane>
    </content>

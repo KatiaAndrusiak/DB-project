@@ -17,6 +17,7 @@
               <items>
                 <MenuItem fx:id="add_empl" mnemonicParsing="false" onAction="#addNewEmployee" text="Dodawanie nowych pracowników do bazy" />
                 <MenuItem fx:id="add_dep" mnemonicParsing="false" onAction="#addNewDepartment" text="Dodawanie nowych stanowisk do bazy" />
+                  <MenuItem mnemonicParsing="false" onAction="#addNewBons" text="Dodawanie nowych premii, bonusów, kar" />
               </items>
             </MenuButton>
             <Label layoutX="14.0" layoutY="6.0" prefHeight="43.0" prefWidth="277.0" text="Panel administratora">

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<ScrollPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="add.AddNewBonsController">
+   <content>
+      <AnchorPane prefHeight="600.0" prefWidth="750.0">
+         <children>
+            <Text layoutX="112.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+            <Text layoutX="71.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Premia:">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+            <Text layoutX="74.0" layoutY="393.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bonus:">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+            <Text layoutX="73.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kara:">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+            <TextField fx:id="premia_opis" layoutX="148.0" layoutY="155.0" prefHeight="25.0" prefWidth="165.0" />
+            <TextField fx:id="premia_proc" layoutX="446.0" layoutY="155.0" prefHeight="25.0" prefWidth="89.0" promptText="1-100%" />
+            <Button layoutX="600.0" layoutY="155.0" mnemonicParsing="false" onAction="#addPremia" prefHeight="25.0" prefWidth="101.0" text="Dodaj premię" />
+            <Text fill="#8d8d8d" layoutX="91.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Opis:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fill="#8d8d8d" layoutX="360.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Procenty:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <TextField fx:id="kara_opis" layoutX="149.0" layoutY="287.0" prefHeight="25.0" prefWidth="165.0" />
+            <TextField fx:id="kara_proc" layoutX="447.0" layoutY="287.0" prefHeight="25.0" prefWidth="89.0" promptText="0-100%" />
+            <Button layoutX="601.0" layoutY="287.0" mnemonicParsing="false" onAction="#addKara" prefHeight="25.0" prefWidth="101.0" text="Dodaj karę" />
+            <Text fill="#8d8d8d" layoutX="92.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Opis:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fill="#8d8d8d" layoutX="361.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Procenty:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <TextField fx:id="bon_opis" layoutX="212.0" layoutY="427.0" prefHeight="25.0" prefWidth="298.0" />
+            <Button layoutX="600.0" layoutY="427.0" mnemonicParsing="false" onAction="#addBon" prefHeight="25.0" prefWidth="101.0" text="Dodaj bonus" />
+            <Text fill="#8d8d8d" layoutX="155.0" layoutY="447.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Opis:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text layoutX="35.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dodawanie nowych premii, bonusów, kar">
+               <font>
+                  <Font name="Segoe UI Semibold" size="22.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </content>
+</ScrollPane>
