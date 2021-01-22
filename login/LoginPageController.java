@@ -1,17 +1,12 @@
 package login;
 
+import alerts.AlertUp;
+import connectionDB.ConnectionDB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
+import setscene.SetScene;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -19,60 +14,74 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
 
-import static login.ConnectionDB.connectWithDB;
+import static connectionDB.ConnectionDB.connectWithDB;
 
+/**
+ * Klasa, która obsługuje logowanie użytkownika do aplikacji
+ */
 public class LoginPageController implements Initializable {
-    @FXML
-    private Button log_button;
     @FXML
     private TextField  login;
     @FXML
     private TextField  haslo;
 
+    SetScene scene = new SetScene();
 
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
-    public static String log;
+    public static int log =0;
 
+    /**
+     * Metoda, która sluży do zalogowania się użytkownika do aplikacji
+     * @param event
+     */
+    public void zaloguj(ActionEvent event){
+        try {
+            con = connectWithDB();
+            if(login.getText().charAt(0) == 'p') {
+                String sql = "SELECT * FROM public.prac_login WHERE login=? and haslo=?";
+                ps = con.prepareStatement(sql);
+                ps.setString(1, login.getText());
+                ps.setString(2, haslo.getText());
 
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    log = rs.getInt("id_pracownik");
+                    scene.setNewWindow(event,"/employee_acc/employeeFirst.fxml");
 
-    public void zaloguj(ActionEvent event) throws Exception {
-//        try {
-//            con = connectWithDB();
-//
-//            String sql = "SELECT * FROM public.Admin WHERE login=? and haslo=?";
-//            ps = con.prepareStatement(sql);
-//            log = login.getText();
-//            ps.setString(1, login.getText());
-//            ps.setString(2, haslo.getText());
-//
-//            rs = ps.executeQuery();
-//            if(rs.next()) {
-                ((Node) event.getSource()).getScene().getWindow().hide();
-                Parent login = FXMLLoader.load(getClass().getResource("/admin_first/first_page.fxml"));
-                Stage stage = new Stage();
-                stage.setScene(new Scene(login));
-                stage.show();
-//            }
-//            else {
-//                Alert alert = new Alert(Alert.AlertType.ERROR);
-//                alert.setTitle("Error");
-//                alert.setHeaderText("Problem z logowaniem!!");
-//                alert.setContentText("Sprawdź poprawność loginu i hasła!");
-//                alert.showAndWait();
-//            }
-//            con.close();
-//            ps.close();
-//            rs.close();
-//        }
-//        catch (Exception e){
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Error");
-//            alert.setHeaderText("Problem z logowaniem się!!");
-//            alert.setContentText("Nie udało się zalogować! Sprobuj ponownie!" + e.getMessage());
-//            alert.showAndWait();
-//        }
+                } else {
+                    throw new Exception("Sprawdź poprawność loginu i hasła!");
+                }
+            }
+            else {
+                String sql = "SELECT * FROM public.Admin WHERE login=? and haslo=?";
+                ps = con.prepareStatement(sql);
+
+                ps.setString(1, login.getText());
+                ps.setString(2, haslo.getText());
+
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    log = rs.getInt("id_admin");
+                    scene.setNewWindow(event,"/admin_first/first_page.fxml");
+
+                } else {
+                    throw new Exception("Sprawdź poprawność loginu i hasła!");
+                }
+            }
+
+            ps.close();
+            rs.close();
+            con.close();
+        }
+        catch (Exception e){
+            AlertUp.allertBoxError("Problem z logowaniem!",
+                    "Nie udało się zalogować! Sprobuj ponownie!\n" + e.getMessage());
+        }
+        finally {
+            ConnectionDB.closeDB(con, ps, rs);
+        }
     }
 
     @Override
