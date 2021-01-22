@@ -13,7 +13,7 @@
       <Pane prefHeight="120.0" prefWidth="750.0" style="-fx-background-color: #8FBC8F;">
          <children>
             <Button fx:id="logout" layoutX="676.0" layoutY="79.0" mnemonicParsing="false" onAction="#wyloguj" prefHeight="30.0" prefWidth="60.0" text="Wyloguj" />
-            <MenuButton layoutX="300.0" layoutY="79.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Dodawanie" textAlignment="CENTER">
+            <MenuButton layoutX="354.0" layoutY="79.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="160.0" text="Dodawanie" textAlignment="CENTER">
               <items>
                 <MenuItem fx:id="add_empl" mnemonicParsing="false" onAction="#addNewEmployee" text="Dodawanie nowych pracowników do bazy" />
                 <MenuItem fx:id="add_dep" mnemonicParsing="false" onAction="#addNewDepartment" text="Dodawanie nowych stanowisk do bazy" />
@@ -25,14 +25,8 @@
                   <Font name="Segoe UI Semibold" size="29.0" />
                </font>
             </Label>
-            <Button layoutX="14.0" layoutY="79.0" mnemonicParsing="false" onAction="#employeeList" prefHeight="30.0" text="Lista pracowników" />
-            <Button layoutX="135.0" layoutY="79.0" mnemonicParsing="false" onAction="#countSalary" prefHeight="30.0" text="Obliczanie wynagrodzenia " />
-            <MenuButton layoutX="457.0" layoutY="79.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Usuwanie">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-                <MenuItem mnemonicParsing="false" text="Action 2" />
-              </items>
-            </MenuButton>
+            <Button layoutX="14.0" layoutY="79.0" mnemonicParsing="false" onAction="#employeeList" prefHeight="30.0" prefWidth="160.0" text="Lista pracowników" />
+            <Button layoutX="183.0" layoutY="79.0" mnemonicParsing="false" onAction="#countSalary" prefHeight="30.0" prefWidth="160.0" text="Obliczanie wynagrodzenia " />
          </children>
       </Pane>
       <Pane fx:id="mainPane" layoutY="120.0" prefHeight="600.0" prefWidth="750.0" />

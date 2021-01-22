@@ -1,10 +1,11 @@
 package add;
 
-import javafx.event.ActionEvent;
+import alerts.AlertUp;
+import connectionDB.ConnectionDB;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import validate.ValidateField;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -12,8 +13,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
 
-import static login.ConnectionDB.connectWithDB;
+import static connectionDB.ConnectionDB.connectWithDB;
 
+/**
+ * Klasa obsługująca dodawanie nowych premii, kar, bonusów do bazy danych
+ */
 public class AddNewBonsController implements Initializable {
     @FXML
     private TextField premia_opis;
@@ -30,11 +34,14 @@ public class AddNewBonsController implements Initializable {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    public void addPremia(ActionEvent event){
+    /**
+     *Metoda obsługująca dodawanie premii do bazy danych
+     */
+    public void addPremia(){
         try {
             if((!(premia_proc.getText() == null || premia_proc.getText().trim().isEmpty())) &&
                     !(premia_opis.getText() == null || premia_opis.getText().trim().isEmpty())
-                    && admin_first.ValidateField.validatePercentField(premia_proc))
+                    && ValidateField.validatePercentField(premia_proc))
             {
                 con = connectWithDB();
                 String sql = "insert into premia(procenty, opis) values (?,?)";
@@ -43,7 +50,7 @@ public class AddNewBonsController implements Initializable {
                 ps.setString(2, premia_opis.getText());
                 int i = ps.executeUpdate();
                 if(i>0){
-                    admin_first.AlertUp.allertBoxInformation("OK", "Premia została dodana");
+                    AlertUp.allertBoxInformation("OK", "Premia została dodana");
                     premia_proc.clear();
                     premia_opis.clear();
                 }
@@ -52,21 +59,25 @@ public class AddNewBonsController implements Initializable {
                 con.close();
             }
             else{
-                admin_first.AlertUp.allertBoxError("Blad","Sprawdź poprawność wprowadzonych danych");
+                throw new Exception("Sprawdź poprawność wprowadzonych danych");
             }
-
-
         }
         catch (Exception e){
-            admin_first.AlertUp.allertBoxError("Bląd",e.getMessage());
+            AlertUp.allertBoxError("Bląd",e.getMessage());
+        }
+        finally {
+            ConnectionDB.closeDB(con, ps, rs);
         }
     }
 
-    public void addKara(ActionEvent event){
+    /**
+     *Metoda obsługująca dodawanie kar do bazy danych
+     */
+    public void addKara(){
         try {
             if((!(kara_proc.getText() == null || kara_proc.getText().trim().isEmpty())) &&
                     !(kara_opis.getText() == null || kara_opis.getText().trim().isEmpty())
-                    && admin_first.ValidateField.validatePercentField(kara_proc))
+                    && ValidateField.validatePercentField(kara_proc))
             {
                 con = connectWithDB();
                 String sql = "insert into kara(procenty, opis) values (?,?)";
@@ -75,7 +86,7 @@ public class AddNewBonsController implements Initializable {
                 ps.setString(2, kara_opis.getText());
                 int i = ps.executeUpdate();
                 if(i>0){
-                    admin_first.AlertUp.allertBoxInformation("OK", "Kara została dodana");
+                    AlertUp.allertBoxInformation("OK", "Kara została dodana");
                     kara_opis.clear();
                     kara_proc.clear();
                 }
@@ -85,16 +96,21 @@ public class AddNewBonsController implements Initializable {
 
             }
             else{
-                admin_first.AlertUp.allertBoxError("Blad","Sprawdź poprawność wprowadzonych danych");
+                throw new Exception("Sprawdź poprawność wprowadzonych danych");
             }
         }
         catch (Exception e){
-            admin_first.AlertUp.allertBoxError("Bląd",e.getMessage());
-
+            AlertUp.allertBoxError("Bląd",e.getMessage());
+        }
+        finally {
+            ConnectionDB.closeDB(con, ps, rs);
         }
     }
 
-    public void addBon(ActionEvent event){
+    /**
+     *Metoda obsługująca dodawanie bonusów do bazy danych
+     */
+    public void addBon(){
         try {
             if(!(bon_opis.getText() == null || bon_opis.getText().trim().isEmpty()))
             {
@@ -104,7 +120,7 @@ public class AddNewBonsController implements Initializable {
                 ps.setString(1, bon_opis.getText());
                 int i = ps.executeUpdate();
                 if(i>0){
-                    admin_first.AlertUp.allertBoxInformation("OK", "Bonus został dodana");
+                    AlertUp.allertBoxInformation("OK", "Bonus został dodana");
                     bon_opis.clear();
                 }
 
@@ -112,11 +128,14 @@ public class AddNewBonsController implements Initializable {
                 con.close();
             }
             else{
-                admin_first.AlertUp.allertBoxError("Blad","Sprawdź poprawność wprowadzonych danych");
+                throw new Exception("Sprawdź poprawność wprowadzonych danych");
             }
         }
         catch (Exception e){
-            admin_first.AlertUp.allertBoxError("Bląd",e.getMessage());
+            AlertUp.allertBoxError("Bląd",e.getMessage());
+        }
+        finally {
+            ConnectionDB.closeDB(con, ps, rs);
         }
     }
 

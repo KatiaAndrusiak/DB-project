@@ -1,6 +1,6 @@
 package add;
 
-import javafx.event.ActionEvent;
+import connectionDB.ConnectionDB;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -14,11 +14,14 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 
-import static admin_first.AlertUp.*;
-import static admin_first.AlertUp.allertBoxInformation;
-import static admin_first.ValidateField.*;
-import static login.ConnectionDB.connectWithDB;
+import static alerts.AlertUp.*;
+import static alerts.AlertUp.allertBoxInformation;
+import static validate.ValidateField.*;
+import static connectionDB.ConnectionDB.connectWithDB;
 
+/**
+ * Klasa obsługująca dodawanie pracowników do bazy danych
+ */
 public class AddEmployeeController implements Initializable {
     @FXML
     private TextField name;
@@ -38,23 +41,21 @@ public class AddEmployeeController implements Initializable {
     private Label plogin;
     @FXML
     private Label phaslo;
-    @FXML
-    private Button bok;
-    @FXML
-    private Button addtoDB;
+
+
 
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
     private int idDepartment = 0;
     private int idPrac = 0;
-    private int idPosition = 0;
-    private int idEtat = 0;
+
     private int i= 0;
     private int j= 0;
-    private String login;
-    private String haslo;
 
+    /**
+     * Metoda słuząca do wyczyszczenia pól
+     */
     public void clearAll(){
         name.clear();
         surname.clear();
@@ -65,8 +66,6 @@ public class AddEmployeeController implements Initializable {
         etat.getSelectionModel().clearSelection();
         idDepartment = 0;
         idPrac = 0;
-        idPosition = 0;
-        idEtat = 0;
         i= 0;
         j= 0;
 
@@ -74,71 +73,56 @@ public class AddEmployeeController implements Initializable {
         phaslo.setText(" ");
     }
 
-
-    public void addEmployeeToDB(ActionEvent event)
+    /**
+     * Metoda obsługująca dodawanie pracowników do bazy danych
+     */
+    public void addEmployeeToDB()
     {
-
         try{
             con = connectWithDB();
 
             if(validateCharField(name) && validateCharField(surname) && validateCharField(city) && validateEmail(email)
                     && validateComboBox(department) && validateComboBox(position) && validateComboBox(etat)) {
                 System.out.println("ok!!");
-                idEtat = etat.getSelectionModel().getSelectedIndex() + 1;
 
-                String sql = "select * from stanowisko where stanowisko = ?";
+
+                String sql = "select  dodaj_pracownik(?,?,?,?,?,?,?)";
                 ps = con.prepareStatement(sql);
-                ps.setString(1, position.getSelectionModel().getSelectedItem());
+                ps.setString(1, name.getText());
+                ps.setString(2, surname.getText());
+                ps.setString(3, city.getText());
+                ps.setString(4, email.getText());
+                ps.setString(5, department.getSelectionModel().getSelectedItem());
+                ps.setString(6, position.getSelectionModel().getSelectedItem());
+                ps.setString(7, etat.getSelectionModel().getSelectedItem().split(" \\(" )[0]);
                 rs = ps.executeQuery();
                 if (rs.next()) {
-                    System.out.println(idEtat + "  " + idDepartment + " " + rs.getInt("id_stanowisko"));
-                    idPosition = rs.getInt("id_stanowisko");
+                    idPrac = rs.getInt(1);
+                    i++;
                 }
+                ps.close();
+                rs.close();
+
+                String login = "p" + idPrac + surname.getText() + "";
+                String haslo = idPrac + surname.getText() + "";
+
+                String sql1 = "insert into prac_login values (?,?,?)";
+                ps = con.prepareStatement(sql1);
+                ps.setInt(1, idPrac);
+                ps.setString(2, login);
+                ps.setString(3, haslo);
+                j = ps.executeUpdate();
 
                 ps.close();
                 rs.close();
 
-                String sql1 = "insert into pracownik(imie, nazwisko, miasto, email ) values (?,?,?,?)";
-                ps = con.prepareStatement(sql1);
-                ps.setString(1, name.getText());
-                ps.setString(2, surname.getText());
-                ps.setString(3, city.getText());
-                ps.setString(4, email.getText());
-
-                i = ps.executeUpdate();
-                ps.close();
-
-                String sql2 = "select * from pracownik where imie=? and nazwisko = ? and miasto = ? and email =?";
-                ps = con.prepareStatement(sql2);
-                ps.setString(1, name.getText());
-                ps.setString(2, surname.getText());
-                ps.setString(3, city.getText());
-                ps.setString(4, email.getText());
-                rs = ps.executeQuery();
-                if (rs.next()) {
-                    System.out.println( rs.getInt("id_pracownik"));
-                    idPrac = rs.getInt("id_pracownik");
-                }
-                String sql3 = "insert into prac_stan values (?,?,?,?)";
-                ps = con.prepareStatement(sql3);
-                ps.setInt(1, idPrac);
-                ps.setInt(2, idEtat);
-                ps.setInt(3, idPosition );
-                ps.setInt(4, idDepartment);
-
-                j = ps.executeUpdate();
-                ps.close();
-
-                login ="p" + idPrac+ surname.getText()+"";
-                haslo = idPrac + surname.getText()+"";
-                if (i > 0 && j>0) {
-                    bok.setDisable(false);
+                if (i > 0 && j >0) {
                     plogin.setText(login);
                     phaslo.setText(haslo);
                     allertBoxInformation("Pracownik został dodany","OK!");
 
                 } else {
-                    allertBoxError("Pracownik nie dodany", "Nie udało się dodać pracownika. Sprobuj ponownie!!!");
+                    throw new Exception("Nie udało się dodać pracownika. Sprobuj ponownie!!!");
                 }
                 rs.close();
                 ps.close();
@@ -152,13 +136,50 @@ public class AddEmployeeController implements Initializable {
         catch(Exception e){
             allertBoxError("Pracownik nie dodany", e.getMessage());
         }
+        finally {
+            ConnectionDB.closeDB(con, ps, rs);
+        }
     }
 
+    /**
+     * Metoda służy do wyswietlania stanowisk w zależności od wybranego dziąłu
+     */
+    public void addPositionsByDepartment()
+    {
+        position.getItems().clear();
+        try{
+            con = connectWithDB();
+            String sql = "select * from stanowisko where id_dzial =?";
+            ps = con.prepareStatement(sql);
 
+            idDepartment = department.getSelectionModel().getSelectedIndex()+1;
+            ps.setInt(1, idDepartment);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String tmp = rs.getString("Stanowisko");
+                position.getItems().add(tmp);
+            }
+            position.setDisable(false);
+            ps.close();
+            rs.close();
+            con.close();
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        finally {
+            ConnectionDB.closeDB(con, ps, rs);
+        }
+
+
+    }
+
+    /**
+     * Metoda służy do inicjalizacji danych na tej stronie(panelu)
+     */
     private void initData()
     {
         position.setDisable(true);
-        bok.setDisable(true);
         try{
             con = connectWithDB();
             String sql = "select * from dzial";
@@ -189,66 +210,12 @@ public class AddEmployeeController implements Initializable {
         catch (Exception e){
             System.out.println(e.getMessage());
         }
+        finally {
+            ConnectionDB.closeDB(con, ps, rs);
+        }
     }
 
-    public void addPositionsByDepartment(ActionEvent event)
-    {
-        position.getItems().clear();
-        try{
-            con = connectWithDB();
-            String sql = "select * from stanowisko where id_dzial =?";
-            ps = con.prepareStatement(sql);
 
-            idDepartment = department.getSelectionModel().getSelectedIndex()+1;
-            ps.setInt(1, idDepartment);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                String tmp = rs.getString("Stanowisko");
-                position.getItems().add(tmp);
-            }
-            position.setDisable(false);
-            ps.close();
-            rs.close();
-            con.close();
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-
-    }
-
-    public void addLoginToDB(ActionEvent event){
-        Connection con=null;
-        PreparedStatement ps = null;
-
-        try {
-            con = connectWithDB();
-            String sql = "insert into prac_login values (?,?,?)";
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, idPrac);
-            ps.setString(2, login);
-            ps.setString(3, haslo);
-            i = ps.executeUpdate();
-            if (i > 0 ) {
-                bok.setDisable(false);
-                plogin.setText(login);
-                phaslo.setText(haslo);
-                allertBoxInformation("Login został dodany","OK!");
-
-            } else {
-                allertBoxError("Login nie dodany", "Nie udało się dodać login. Sprobuj ponownie!!!");
-            }
-            ps.close();
-            rs.close();
-            con.close();
-            clearAll();
-
-        }
-        catch (Exception e){
-            allertBoxError("Login nie dodany", e.getMessage());
-        }
-
-    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initData();

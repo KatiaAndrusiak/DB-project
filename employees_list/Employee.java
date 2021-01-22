@@ -1,5 +1,8 @@
 package employees_list;
-
+/**
+ * Klasa slużąca do tworzenia listy
+ * @see EmployeeListController
+ */
 public class Employee {
     private int id;
     private String name;
@@ -28,8 +31,6 @@ public class Employee {
     public void setEtat(String etat) {
         this.etat = etat;
     }
-
-
 
     public int getId() {
         return id;

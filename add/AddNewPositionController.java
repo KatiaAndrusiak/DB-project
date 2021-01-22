@@ -1,8 +1,8 @@
 package add;
 
+import connectionDB.ConnectionDB;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
@@ -13,10 +13,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import static admin_first.AlertUp.*;
-import static admin_first.ValidateField.*;
-import static login.ConnectionDB.connectWithDB;
+import static alerts.AlertUp.*;
+import static validate.ValidateField.*;
+import static connectionDB.ConnectionDB.connectWithDB;
 
+
+/**
+ * Klasa obsługująca dodawanie nowych stanowisk do bazy danych
+ */
 public class AddNewPositionController implements Initializable {
     @FXML
     private ComboBox<String> department;
@@ -30,6 +34,9 @@ public class AddNewPositionController implements Initializable {
     private int idDepartment=0;
     private int i = 0;
 
+    /**
+     * Metoda słuząca do wyczyszczenia pól
+     */
     public void clearAll(){
         department.getSelectionModel().clearSelection();
         position.clear();
@@ -38,6 +45,9 @@ public class AddNewPositionController implements Initializable {
         i = 0;
     }
 
+    /**
+     * Metoda obsługująca dodawanie stanowisk do bazy danych
+     */
     public void addPosition(){
         try {
             con = connectWithDB();
@@ -56,9 +66,8 @@ public class AddNewPositionController implements Initializable {
                     allertBoxInformation("Stanowisko zostało dodane","OK!");
                     clearAll();
                 } else {
-                    allertBoxError("Stanowisko nie dodane", "Nie udało się dodać stanowisko. Sprobuj ponownie!!!");
+                    throw new Exception("Nie udało się dodać stanowisko. Sprobuj ponownie!!!");
                 }
-
 
                 ps.close();
                 rs.close();
@@ -70,8 +79,14 @@ public class AddNewPositionController implements Initializable {
         catch(Exception e){
             allertBoxError("Stanowisko nie dodane", e.getMessage());
         }
+        finally {
+            ConnectionDB.closeDB(con, ps, rs);
+        }
     }
 
+    /**
+     * Metoda służy do inicjalizacji danych na tej stronie(panelu)
+     */
     private void initData()
     {
         try{
@@ -93,7 +108,12 @@ public class AddNewPositionController implements Initializable {
         catch (Exception e){
             System.out.println(e.getMessage());
         }
+        finally {
+            ConnectionDB.closeDB(con, ps, rs);
+        }
     }
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initData();

@@ -1,6 +1,7 @@
 package employees_list;
 
-import admin_first.AlertUp;
+import alerts.AlertUp;
+import connectionDB.ConnectionDB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,8 +19,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
 
-import static login.ConnectionDB.connectWithDB;
+import static connectionDB.ConnectionDB.connectWithDB;
 
+/**
+ * Klasa służąca do wyświetlania listy pracowników
+ */
 public class EmployeeListController implements Initializable {
     @FXML
     private TableView<Employee>  table;
@@ -47,17 +51,23 @@ public class EmployeeListController implements Initializable {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    public static Employee selItem;
+    private static Employee selItem;
+    public static boolean sel = false;
 
     public  void onTableClick(){
         editButton.setDisable(false);
+        deleteButton.setDisable(false);
     }
 
+    /**
+     * Metoda wyświetlająca panel do edytowanie danych pracownika
+     */
     public void edit(){
         try {
             if (table.getSelectionModel().getSelectedItem() != null) {
+                sel = true;
                 selItem = table.getSelectionModel().getSelectedItem();
-                Parent login = FXMLLoader.load(getClass().getResource("/employees_list/EditEmployee.fxml"));
+                Parent login = FXMLLoader.load(getClass().getResource("/editemployee/EditEmployee.fxml"));
                 Stage stage = new Stage();
                 stage.setScene(new Scene(login));
                 stage.show();
@@ -68,29 +78,49 @@ public class EmployeeListController implements Initializable {
         }
     }
 
+    /**
+     * Metoda służąca do usuwania pracowników z listy i BD
+     */
     public void delete(){
         try {
             if (table.getSelectionModel().getSelectedItem() != null) {
                 selItem = table.getSelectionModel().getSelectedItem();
                 con = connectWithDB();
-//                String sql = "delete from pracownik where id_pracownik=?";
-//                ps = con.prepareStatement(sql);
-//                ps.setInt(1, selItem.getId());
-
-                int i = ps.executeUpdate();
+                String sql = "select delete_pracownik(?)";
+                ps = con.prepareStatement(sql);
+                ps.setInt(1, selItem.getId());
+                boolean i =false;
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    i = rs.getBoolean(1);
+                }
+                else {
+                  throw new Exception("Nie udało się wykonać tego polecenia.");
+                }
+                if(i){
+                    AlertUp.allertBoxInformation("OK","Pracownik "+selItem.getName() +" "+selItem.getSurname() +" został usuniety");
+                    list();
+                }
+                ps.close();
+                rs.close();
             }
         }
         catch (Exception e){
-            AlertUp.allertBoxError("error", e.getMessage());
+            AlertUp.allertBoxError("Błąd", e.getMessage());
+        }
+        finally {
+            ConnectionDB.closeDB(con, ps, rs);
         }
     }
+
+
     public static Employee getEmployee(){
         return selItem;
     }
 
-
-
-
+    /**
+     * Metoda odczytująca z BD listę pracowników
+     */
     public void list(){
         id.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("id"));
         name.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
@@ -118,23 +148,28 @@ public class EmployeeListController implements Initializable {
             con.close();
 
         }catch(Exception e){
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setTitle("Error");
-            a.setHeaderText("Error in Fetching Data .");
-            a.setContentText("There is some Error in Fetching Data. PLEASE TRY AGAIN..!!!"+e.getMessage());
-            a.showAndWait();
-
+            AlertUp.allertBoxError("Błąd", e.getMessage()+"\nSprobuj ponownie!");
+        }
+        finally {
+            ConnectionDB.closeDB(con, ps, rs);
         }
         table.setItems(list);
     }
 
 
+
+    /**
+     * Metoda służy do inicjalizacji danych na tej stronie(panelu)
+     */
     private void initData(){
         table.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         editButton.setDisable(true);
         deleteButton.setDisable(true);
+        sel = false;
         list();
     }
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

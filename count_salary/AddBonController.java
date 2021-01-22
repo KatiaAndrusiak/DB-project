@@ -1,5 +1,6 @@
 package count_salary;
 
+import connectionDB.ConnectionDB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,12 +15,14 @@ import java.sql.SQLException;
 import java.time.Year;
 import java.util.ResourceBundle;
 
-import static admin_first.AlertUp.allertBoxError;
-import static admin_first.AlertUp.allertBoxInformation;
-import static admin_first.ValidateField.*;
-import static admin_first.ValidateField.validateComboBox;
-import static login.ConnectionDB.connectWithDB;
+import static alerts.AlertUp.*;
+import static validate.ValidateField.*;
+import static connectionDB.ConnectionDB.connectWithDB;
 
+
+/**
+ * Klasa słująca do obliczania wynagrodzenia oraz dodawania do bazy danych
+ */
 public class AddBonController implements Initializable {
     @FXML
     private ComboBox<String> department;
@@ -53,6 +56,9 @@ public class AddBonController implements Initializable {
     int j = 0;
     int idPlaca =0;
 
+    /**
+     * Metoda słuząca do wyczyszczenia pól
+     */
     public void clearAll(){
         department.getSelectionModel().clearSelection();
         employee.getSelectionModel().clearSelection();
@@ -66,6 +72,9 @@ public class AddBonController implements Initializable {
     }
 
 
+    /**
+     * Metoda słująca do obliczania wynagrodzenia oraz dodawania do bazy danych
+     */
     public void countSalary(){
 
         try {
@@ -122,10 +131,11 @@ public class AddBonController implements Initializable {
                            salary += m_salary * rs.getDouble("procenty");
                            ltotal = ltotal + "Premia "+ a +": +" + m_salary * rs.getDouble("procenty") + "\n";
 
-                           String sql1 = "Insert Into pl_premia (id_placa, id_premia) values (?,?)";
+                           String sql1 = "Insert Into pl_premia (id_placa, id_premia, kwota) values (?,?,?)";
                            ps = con.prepareStatement(sql1);
                            ps.setInt(1, idPlaca);
                            ps.setInt(2, rs.getInt("id_premia"));
+                           ps.setDouble(3, m_salary * rs.getDouble("procenty"));
                            ps.executeUpdate();
                            ps.close();
                        }
@@ -150,10 +160,11 @@ public class AddBonController implements Initializable {
                            salary -= m_salary * rs.getDouble("procenty");
                            ltotal = ltotal + "Kara "+ a +": -" + m_salary * rs.getDouble("procenty") + "\n";
 
-                           String sql1 = "Insert Into pl_kara (id_placa, id_kara) values (?,?)";
+                           String sql1 = "Insert Into pl_kara (id_placa, id_kara, kwota) values (?,?,?)";
                            ps = con.prepareStatement(sql1);
                            ps.setInt(1, idPlaca);
                            ps.setInt(2,rs.getInt("id_kara"));
+                           ps.setDouble(3, m_salary * rs.getDouble("procenty"));
                            ps.executeUpdate();
                            ps.close();
                        }
@@ -185,10 +196,11 @@ public class AddBonController implements Initializable {
                    }
                }
 
-               String sql5 = "UPDATE placa SET wyplata = ? WHERE id_placa = ?";
+               String sql5 = "UPDATE placa SET wyplata = ?, brutto = ?  WHERE id_placa = ?";
                ps = con.prepareStatement(sql5);
                ps.setDouble(1, salary);
-               ps.setInt(2,idPlaca);
+               ps.setDouble(2, m_salary);
+               ps.setInt(3,idPlaca);
                ps.executeUpdate();
 
                sum.setText(salary+" zł");
@@ -204,6 +216,9 @@ public class AddBonController implements Initializable {
             allertBoxError("SQLException", e.getMessage());
         }catch(Exception e){
             allertBoxError("Płaca nie dodana", e.getMessage());
+        }
+        finally {
+            ConnectionDB.closeDB(con, ps, rs);
         }
     }
 
@@ -229,8 +244,15 @@ public class AddBonController implements Initializable {
         catch (Exception e){
             System.out.println(e.getMessage());
         }
+        finally {
+            ConnectionDB.closeDB(con, ps, rs);
+        }
     }
 
+
+    /**
+     * Metoda służy do inicjalizacji danych na tej stronie(panelu)
+     */
     private void initData()
     {
         int yr = Year.now().getValue();
@@ -296,7 +318,9 @@ public class AddBonController implements Initializable {
         catch (Exception e){
             System.out.println(e.getMessage());
         }
-
+        finally {
+            ConnectionDB.closeDB(con, ps, rs);
+        }
     }
 
     @Override
