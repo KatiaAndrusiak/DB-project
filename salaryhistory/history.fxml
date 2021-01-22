@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salaryhistory.HistoryController">
+   <content>
+      <AnchorPane prefHeight="600.0" prefWidth="750.0">
+         <children>
+            <TableView fx:id="table" layoutX="6.0" layoutY="83.0" prefHeight="457.0" prefWidth="738.0">
+              <columns>
+                <TableColumn fx:id="date" prefWidth="42.0" text="Data" />
+                <TableColumn fx:id="days" prefWidth="25.0" text="Dni" />
+                  <TableColumn fx:id="brutto" prefWidth="63.0" text="Brutto (zł)" />
+                  <TableColumn fx:id="premia" prefWidth="185.0" text="Premie" />
+                  <TableColumn fx:id="kara" prefWidth="231.0" text="Kary" />
+                  <TableColumn fx:id="bon" prefWidth="137.0" text="Bonusy" />
+                  <TableColumn fx:id="total" prefWidth="53.0" text="Wypłata" />
+              </columns>
+            </TableView>
+            <Text layoutX="14.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Historia wypłat">
+               <font>
+                  <Font name="Segoe UI Semibold" size="22.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </content>
+</ScrollPane>
