@@ -37,21 +37,21 @@ public class EmployeeFirstController implements Initializable {
      * Metoda zmieniająca panel na panel wyświetlający historie wyplat
      */
     public void historyclick(){
-        scene.setNewPane(mainPane,"../salaryhistory/history.fxml");
+        scene.setNewPane(mainPane,"/salaryhistory/history.fxml");
     }
 
     /**
      * Metoda zmieniająca panel na panel wyświetlający dane osobowe pracownika
      */
     public void employeeInfoClick(){
-        scene.setNewPane(mainPane,"../employeeinfo/employee_info.fxml");
+        scene.setNewPane(mainPane,"/employeeinfo/employee_info.fxml");
     }
 
     /**
      * Metoda zmieniająca panel na panel wyświetlający formularz do zmiany hasła
      */
     public void changePass(){
-        scene.setNewPane(mainPane,"../emplchangepass/changePass.fxml");
+        scene.setNewPane(mainPane,"/emplchangepass/changePass.fxml");
     }
 
     /**

@@ -80,7 +80,7 @@ public class AddBonController implements Initializable {
         try {
             con = connectWithDB();
 
-           if(validateNum(year) && validateNum(days) && validateComboBox(department) && validateComboBox(employee)
+           if(validateNum(year) && validateNum(days) && Integer.parseInt(days.getText())>=0 && Integer.parseInt(days.getText())<=31  && validateComboBox(department) && validateComboBox(employee)
            && validateComboBox(month)) {
 
 
@@ -210,6 +210,9 @@ public class AddBonController implements Initializable {
                 rs.close();
                 con.close();
                allertBoxInformation("Wypłata została dodana.","OK!");
+           }
+           else {
+               throw new Exception("Błąd. Sprawdź poprawność wprowadzonych danych.");
            }
 
         }catch (SQLException e){

@@ -3,9 +3,11 @@ package admin_first;
 import alerts.AlertUp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 import setscene.SetScene;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -35,7 +37,7 @@ public class FirstPageController implements Initializable {
      */
     @FXML
     public void employeeList(){
-        scene.setNewPane(mainPane,"../employees_list/employeeList.fxml");
+        scene.setNewPane(mainPane,"/employees_list/employeeList.fxml");
     }
 
     /**
@@ -43,7 +45,7 @@ public class FirstPageController implements Initializable {
      */
     @FXML
     public void addNewEmployee() {
-        scene.setNewPane(mainPane,"../add/addEmployee.fxml");
+        scene.setNewPane(mainPane,"/add/addEmployee.fxml");
     }
 
     /**
@@ -51,7 +53,7 @@ public class FirstPageController implements Initializable {
      */
     @FXML
     public void addNewDepartment() {
-        scene.setNewPane(mainPane,"../add/addNewPosition.fxml");
+        scene.setNewPane(mainPane,"/add/addNewPosition.fxml");
     }
 
     /**
@@ -59,7 +61,7 @@ public class FirstPageController implements Initializable {
      */
     @FXML
     public void addNewBons() {
-        scene.setNewPane(mainPane,"../add/addNewBons.fxml");
+        scene.setNewPane(mainPane,"/add/addNewBons.fxml");
     }
 
     /**
@@ -67,7 +69,7 @@ public class FirstPageController implements Initializable {
      */
     @FXML
     public void countSalary() {
-        scene.setNewPane(mainPane,"../count_salary/addBon.fxml");
+        scene.setNewPane(mainPane,"/count_salary/addBon.fxml");
     }
 
     @Override
